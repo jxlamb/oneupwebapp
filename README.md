@@ -27,4 +27,4 @@ node server.js
 ## Access http://localhost:3000/
 Accessing localhost base path will cause the application to serve up index.html. Subsequent visits to localhost base url will utalize previously stored session state information, e.g. like when a callback occurs during an OAuth sequence. 
 
-#Please be sure to complete all steps (i.e click every green button in order)
+# Please be sure to complete all steps (i.e click every green button in order)
