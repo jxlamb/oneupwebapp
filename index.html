@@ -1,0 +1,200 @@
+<html lang="en">
+<head>
+    <title>1UP Developer API Tests</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+    <link rel="stylesheet" href="/components/json-viewer.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/components/json-viewer.js"></script>
+    <script type="text/javascript" src="/components/client.js"></script>
+    <script type="text/javascript" src="/configuration/config.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="p-5 text-center bg-image" style="background-image: url('https://ringsandcoins.com/wp-content/uploads/2015/09/Mario-Fireworks-800x445.jpg'); height: 400px;" >
+            <div class="mask" style="background-color: rgba(0, 0, 0, 0.6);">
+                <div class="d-flex justify-content-center align-items-center h-100">
+                    <div class="text-white">
+                        <h1 class="mb-3">1UP Developer API Tests</h1>
+                        <h4 class="mb-3">Step By Step Execution</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="p-3 mb-4 bg-primary text-white">
+            <h4>Step 1: Input Credentials</h4>
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text"><strong>Client Id</strong></span>
+            <input type="text" class="form-control" id="client_id" value="c2da53a4a4fb7b4a3e20be538e02a3f9">
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text"><strong>Client Secret</strong></span>
+            <input type="text" class="form-control" id="client_secret" value="661a0e04cd4f2d1481629e998b1e68c9">
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text"><strong>User Id</strong></span>
+            <input type="text" class="form-control" id="app_user_id" value="jxlamb">
+        </div>
+        </br></br>
+
+
+        <div class="p-3 mb-4 bg-primary text-white">
+            <h4>Step 2: Generate Authorization Code</h4>
+        </div>
+        <div class="d-grid gap-2 d-md-block">
+            <button class="btn btn-success btn-lg" type="button" id="create" value="createNewUser"><strong>Access For New User</strong></button>
+            <span class="badge bg-secondary">-OR-</span>
+            <button class="btn btn-success btn-lg" type="button" id="useexisting" value="useExistingUser"><strong>Access For Existing User</strong></button>
+        </div>
+        <div id="stepTwoSuccess"></div>
+        <div id="stepTwoError"></div>
+        </br></br>
+
+
+        <div class="p-3 mb-4 bg-primary text-white">
+            <h4>Step 3: Exchange Code for Access Token</h4>
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text"><strong>Authorization Code</strong></span>
+            <input type="text" class="form-control" id="authCode" value="auth code will populate here" readonly>
+        </div>
+        <div class="d-grid gap-2 d-md-block">
+            <button class="btn btn-success btn-lg" type="button" id="exchange" value="exchangeForToken">Exchange For Access Token</button>
+        </div>
+        <div id="stepThreeSuccess"></div>
+        <div id="stepThreeError"></div>
+        </br></br>
+        <div class="alert alert-secondary" role="alert" style="display: none;" id="tokenPayloadAlert"><strong>Access Token Payload</strong></div>
+        <div class="input-group mb-3">
+            <span class="input-group-text"><strong>Access Token</strong></span>
+            <input type="text" class="form-control" id="accessToken" value="Access token will populate here" readonly>
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text"><strong>Refresh Token</strong></span>
+            <input type="text" class="form-control" id="refreshToken" value="Refresh token will populate here" readonly>
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text"><strong>Scope</strong></span>
+            <input type="text" class="form-control" id="accessTokenScope" value="Access token scope(s) will populate here" readonly>
+        </div>
+        </br></br>
+
+        <div class="p-3 mb-4 bg-primary text-white">
+            <h4>Step 4: Search for a Connected Health System</h4>
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text"><strong>Health System Id</strong></span>
+            <input type="text" class="form-control" id="healthSystemId" value="4707" >
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text"><strong>Health System UserName</strong></span>
+            <input type="text" class="form-control" id="healthSystemUserName" value="wilmasmart" >
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text"><strong>Health System Password</strong></span>
+            <input type="text" class="form-control" id="healthSystemPassword" value="Cerner01" >
+        </div>
+        <div class="d-grid gap-2 d-md-block">
+            <button class="btn btn-success btn-lg" type="button" id="testHealthSystem" value="submitHealthSystemSearch" data-bs-toggle="tooltip" data-bs-placement="top" title="Defaults Provided for Cerner Test Health System">Check Health System by Id</button>
+        </div>
+        <div id="stepFourSuccess"></div>
+        <div id="stepFourError"></div>
+        </br>
+        <div id="connectionStatusAlertUnknown" class="alert alert-warning mb-3 " role="alert">Health System Connection Status is <strong>Unknown</strong></div>
+        <div id="connectionStatusAlertSuccess" style="display: none" class="alert alert-success mb-3" role="alert">Health System Connection is <strong>Working!</strong></div>
+        <div id="connectionStatusAlertFailure" style="display: none" class="alert alert-danger mb-3" role="alert">Health System Connection is <strong>Offline!</strong></div>
+        </br>
+        <div class="input-group mb-3">
+            <span class="input-group-text"><strong>Health System Name</strong></span>
+            <input type="text" class="form-control" id="healthSystemName" value="The Health System (EHR) Name will populate here" readonly>
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text"><strong>Health System FHIR Url</strong></span>
+            <input type="text" class="form-control" id="healthSystemFhirUrl" value="The EHR FHIR Url will populate here" readonly>
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text"><strong>Health System FHIR Version</strong></span>
+            <input type="text" class="form-control" id="healthSystemFhirVersion" value="The EHR FHIR Version will populate here" readonly>
+        </div>
+        </br></br>
+        <div class="p-3 mb-4 bg-primary text-white">
+            <h4>Step 5: Complete OAuth process as Health System User</h4>
+        </div>
+        </br>
+        <div id="step5InfoBlock" class="alert alert-info mb-3 " role="alert">
+            Use the <strong>1upHealth Connect API</strong> with the access token retrieved during step 3 to connect to the specified test health system.
+            </br></br><strong>Test user credentials can be located here: </strong></br>
+            <a target="_blank" rel="noopener noreferrer">https://1up.health/docs/start/fhir-test-credentials</a>
+            </br></br>The example credentials provided in the user name and password fields at step 4 may be used to connect as a cerner test user.
+        </div>
+        <div class="d-grid gap-2 d-md-block">
+            <a class="btn btn-success btn-lg" type="button" id="loginEhrTestUser"
+               value="healthSystemOAuthOpen" data-bs-toggle="tooltip" data-bs-placement="top"
+               title="Redirects to the health system login screen">Complete Login for Health System User</a>
+        </div>
+        </br>
+        </br>
+        <div class="p-3 mb-4 bg-primary text-white">
+            <h4>Step 6: Get Created Fhir Patient</h4>
+        </div>
+        <div class="d-grid gap-2 d-md-block">
+            <button class="btn btn-success btn-lg" type="button" id="getPatient" value="getPatientBtn">Get Fhir Patient Id</button>
+        </div>
+        </br>
+        <div id="stepSixSuccess"></div>
+        <div id="stepSixError"></div>
+
+        </br>
+        </br>
+        <div class="p-3 mb-4 bg-primary text-white">
+            <h4>Step 7: Perform FHIR Search</h4>
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text"><strong>Fhir Version (of Health System)</strong></span>
+            <input type="text" class="form-control" id="fhirVersionPath" value="R4" readonly>
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text"><strong>ResourceType (e.g. Patient)</strong></span>
+            <input type="text" class="form-control" id="fhirResourceType" value="Patient" >
+        </div>
+        <div id="step6queryinfoblock" class="alert alert-info mb-3 " role="alert">
+            <strong>ResourceId</strong> or <strong>Query String</strong> is required. Do not provide values for both.
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text"><strong>ResourceId</strong></span>
+            <input type="text" class="form-control" id="fhirResourceId" value="">
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text"><strong>Query String Params</strong></span>
+            <input type="text" class="form-control" id="fhirQueryString" value="" >
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text"><strong>Operation Params</strong></span>
+            <input type="text" class="form-control" id="fhirOperation" value="$everything" >
+        </div>
+        <div id="step7InfoBlock" class="alert alert-info mb-3 " role="alert">
+            Enter a FHIR Resource ID and Query Params to perform a FHIR <strong>Search</strong> or <strong>Read</strong> operation for the connected health system.
+            </br></br>Results of search (including error details, if provided) will be included below.
+            </br></br>Example Path:
+            </br><strong>https://api.1up.health/stu2/Patient/{patient_id}/$everything'</strong>
+        </div>
+        <div class="d-grid gap-2 d-md-block">
+            <button class="btn btn-success btn-lg" type="button" id="runFhirQuery" value="submitFhirQuery">Perform FHIR Query</button>
+        </div>
+        </br>
+        <div class="d-grid gap-2 d-md-block">
+            <button class="btn btn-success btn-lg" type="button" id="next" value="nextFhir"><strong>>></strong>Next Page of Results</button>
+        </div>
+        <div class="d-grid gap-2 d-md-block">
+            <button class="btn btn-success btn-lg" type="button" id="previous" value="priorFhir"><strong><<</strong> Previous Page of Results</button>
+        </div>
+        <div id="stepSevenSuccess"></div>
+        <div id="stepSevenError"></div>
+        </br>
+
+    </div>
+    </body>
+</html>
